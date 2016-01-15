@@ -9,7 +9,6 @@
 'use strict';
 
 var toMarkdown;
-var converters;
 var mdConverters = require('./lib/md-converters');
 var gfmConverters = require('./lib/gfm-converters');
 var collapse = require('collapse-whitespace');
@@ -206,7 +205,7 @@ function flankingWhitespace(node) {
  * `_replacement`
  */
 
-function process(node) {
+function process(node, converters) {
   var replacement, content = getContent(node);
 
   // Remove blank nodes
@@ -254,7 +253,7 @@ toMarkdown = function (input, options) {
       nodes = bfsOrder(clone),
       output;
 
-  converters = mdConverters.slice(0);
+  var converters = mdConverters.slice(0);
   if (options.gfm) {
     converters = gfmConverters.concat(converters);
   }
@@ -265,7 +264,7 @@ toMarkdown = function (input, options) {
 
   // Process through nodes in reverse (so deepest child elements are first).
   for (var i = nodes.length - 1; i >= 0; i--) {
-    process(nodes[i]);
+    process(nodes[i], converters);
   }
   output = getContent(clone);
 

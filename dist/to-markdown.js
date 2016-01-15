@@ -10,7 +10,6 @@
 'use strict';
 
 var toMarkdown;
-var converters;
 var mdConverters = require('./lib/md-converters');
 var gfmConverters = require('./lib/gfm-converters');
 var collapse = require('collapse-whitespace');
@@ -207,7 +206,7 @@ function flankingWhitespace(node) {
  * `_replacement`
  */
 
-function process(node) {
+function process(node, converters) {
   var replacement, content = getContent(node);
 
   // Remove blank nodes
@@ -255,9 +254,11 @@ toMarkdown = function (input, options) {
       nodes = bfsOrder(clone),
       output;
 
-  converters = mdConverters.slice(0);
+  var converters;
   if (options.gfm) {
     converters = gfmConverters.concat(converters);
+  } else {
+    converters = mdConverters.slice(0);
   }
 
   if (options.converters) {
@@ -266,7 +267,7 @@ toMarkdown = function (input, options) {
 
   // Process through nodes in reverse (so deepest child elements are first).
   for (var i = nodes.length - 1; i >= 0; i--) {
-    process(nodes[i]);
+    process(nodes[i], converters);
   }
   output = getContent(clone);
 
@@ -282,7 +283,7 @@ toMarkdown.outer = outer;
 
 module.exports = toMarkdown;
 
-},{"./lib/gfm-converters":2,"./lib/md-converters":3,"collapse-whitespace":4,"jsdom":7}],2:[function(require,module,exports){
+},{"./lib/gfm-converters":2,"./lib/md-converters":3,"collapse-whitespace":6,"jsdom":5}],2:[function(require,module,exports){
 'use strict';
 
 function cell(content, node) {
@@ -547,6 +548,52 @@ module.exports = [
   }
 ];
 },{}],4:[function(require,module,exports){
+/**
+ * This file automatically generated from `build.js`.
+ * Do not manually edit.
+ */
+
+module.exports = [
+  "address",
+  "article",
+  "aside",
+  "audio",
+  "blockquote",
+  "canvas",
+  "dd",
+  "div",
+  "dl",
+  "fieldset",
+  "figcaption",
+  "figure",
+  "footer",
+  "form",
+  "h1",
+  "h2",
+  "h3",
+  "h4",
+  "h5",
+  "h6",
+  "header",
+  "hgroup",
+  "hr",
+  "main",
+  "nav",
+  "noscript",
+  "ol",
+  "output",
+  "p",
+  "pre",
+  "section",
+  "table",
+  "tfoot",
+  "ul",
+  "video"
+];
+
+},{}],5:[function(require,module,exports){
+
+},{}],6:[function(require,module,exports){
 'use strict';
 
 var voidElements = require('void-elements');
@@ -684,51 +731,7 @@ function next(prev, current) {
 
 module.exports = collapseWhitespace;
 
-},{"block-elements":5,"void-elements":6}],5:[function(require,module,exports){
-/**
- * This file automatically generated from `build.js`.
- * Do not manually edit.
- */
-
-module.exports = [
-  "address",
-  "article",
-  "aside",
-  "audio",
-  "blockquote",
-  "canvas",
-  "dd",
-  "div",
-  "dl",
-  "fieldset",
-  "figcaption",
-  "figure",
-  "footer",
-  "form",
-  "h1",
-  "h2",
-  "h3",
-  "h4",
-  "h5",
-  "h6",
-  "header",
-  "hgroup",
-  "hr",
-  "main",
-  "nav",
-  "noscript",
-  "ol",
-  "output",
-  "p",
-  "pre",
-  "section",
-  "table",
-  "tfoot",
-  "ul",
-  "video"
-];
-
-},{}],6:[function(require,module,exports){
+},{"block-elements":4,"void-elements":7}],7:[function(require,module,exports){
 /**
  * This file automatically generated from `pre-publish.js`.
  * Do not manually edit.
@@ -752,8 +755,6 @@ module.exports = {
   "track": true,
   "wbr": true
 };
-
-},{}],7:[function(require,module,exports){
 
 },{}]},{},[1])(1)
 });
