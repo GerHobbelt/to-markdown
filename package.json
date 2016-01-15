@@ -1,14 +1,14 @@
 {
-  "name": "to-markdown",
+  "name": "@beneaththeink/to-markdown",
   "description": "HTML-to-Markdown converter",
   "url": "http://domchristie.github.com/to-markdown/",
   "keywords": "markdown",
   "author": "Dom Christie",
   "main": "index.js",
-  "version": "2.0.1",
+  "version": "2.0.1-ink1",
   "repository": {
     "type": "git",
-    "url": "https://github.com/domchristie/to-markdown.git"
+    "url": "https://github.com/beneaththeink/to-markdown.git"
   },
   "scripts": {
     "start": "watchify -s toMarkdown -o dist/to-markdown.js index.js -v",
